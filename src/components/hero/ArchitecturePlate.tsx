@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { siteEdges, siteNodes, type SiteEdge } from '../../content/site'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { Packet } from '../diagram/Packet'
 
 /** Midpoint of the longest straight run of an orthogonal path, for its label. */
 function labelPoint(d: string): [number, number, boolean] {
@@ -27,40 +28,6 @@ function labelPoint(d: string): [number, number, boolean] {
 }
 
 const pathId = (e: SiteEdge) => `fig1-${e.id}`
-
-/** A packet that runs along an edge once per `cycle` seconds, then hides. */
-function Packet({ edge, begin, travel, cycle, reverse, color = 'var(--accent)' }: {
-  edge: string
-  begin: number
-  travel: number
-  cycle: number
-  reverse?: boolean
-  color?: string
-}) {
-  const f = (travel / cycle).toFixed(3)
-  return (
-    <circle r="3.2" fill={color} opacity="0">
-      <animateMotion
-        dur={`${cycle}s`}
-        begin={`${begin}s`}
-        repeatCount="indefinite"
-        keyPoints={reverse ? '1;0;0' : '0;1;1'}
-        keyTimes={`0;${f};1`}
-        calcMode="linear"
-      >
-        <mpath href={`#fig1-${edge}`} />
-      </animateMotion>
-      <animate
-        attributeName="opacity"
-        dur={`${cycle}s`}
-        begin={`${begin}s`}
-        repeatCount="indefinite"
-        values="1;1;0;0"
-        keyTimes={`0;${f};${Math.min(0.999, Number(f) + 0.001)};1`}
-      />
-    </circle>
-  )
-}
 
 /**
  * Fig. 1: this site's own AWS architecture, drawn like a survey plate.
@@ -126,12 +93,12 @@ export function ArchitecturePlate() {
         {/* Traffic */}
         {!reduced && (
           <g aria-hidden="true">
-            <Packet edge="e-req" begin={2} travel={1.1} cycle={3.6} />
-            <Packet edge="e-origin" begin={3.1} travel={1} cycle={3.6} />
-            <Packet edge="e-origin" begin={4.2} travel={1} cycle={3.6} reverse color="var(--fg)" />
-            <Packet edge="e-req" begin={5.2} travel={1.1} cycle={3.6} reverse color="var(--fg)" />
-            <Packet edge="e-deploy" begin={3.5} travel={1.4} cycle={9} color="var(--accent-2)" />
-            <Packet edge="e-inval" begin={5} travel={1.6} cycle={9} color="var(--accent-2)" />
+            <Packet path="fig1-e-req" begin={2} travel={1.1} cycle={3.6} />
+            <Packet path="fig1-e-origin" begin={3.1} travel={1} cycle={3.6} />
+            <Packet path="fig1-e-origin" begin={4.2} travel={1} cycle={3.6} reverse color="var(--fg)" />
+            <Packet path="fig1-e-req" begin={5.2} travel={1.1} cycle={3.6} reverse color="var(--fg)" />
+            <Packet path="fig1-e-deploy" begin={3.5} travel={1.4} cycle={9} color="var(--accent-2)" />
+            <Packet path="fig1-e-inval" begin={5} travel={1.6} cycle={9} color="var(--accent-2)" />
           </g>
         )}
 

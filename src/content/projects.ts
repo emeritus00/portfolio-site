@@ -71,7 +71,7 @@ export const projects: Project[] = [
       ],
       edges: [
         { from: 'client', to: 'api', label: 'HTTPS' },
-        { from: 'api', to: 'db', label: 'tenant-scoped queries' },
+        { from: 'api', to: 'db', label: 'tenant-scoped' },
       ],
     },
     inspection: {
