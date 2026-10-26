@@ -9,6 +9,8 @@ interface Props {
   children?: ReactNode
   /** Hide the survey title block (the hero draws its own). */
   bare?: boolean
+  /** Extra decorative layer drawn behind the content (e.g. hero contours). */
+  backdrop?: ReactNode
   className?: string
 }
 
@@ -17,7 +19,7 @@ interface Props {
  * draws the boundary from the layer above, the legend texture, and a survey
  * "title block" header.
  */
-export function LayerSection({ layer, children, bare, className = '' }: Props) {
+export function LayerSection({ layer, children, bare, backdrop, className = '' }: Props) {
   const index = layers.findIndex((l) => l.id === layer.id)
   const prev = index > 0 ? layers[index - 1] : undefined
   const headingId = `${layer.id}-title`
@@ -41,6 +43,7 @@ export function LayerSection({ layer, children, bare, className = '' }: Props) {
         >
           <div className="absolute inset-0" style={hatchStyle(layer.hatch)} />
         </div>
+        {backdrop}
 
         <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-10 sm:px-8 md:pl-12 md:pr-[calc(var(--gauge-w)+2rem)] lg:pb-32">
           {!bare && (

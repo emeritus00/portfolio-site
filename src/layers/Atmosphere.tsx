@@ -1,40 +1,78 @@
+import { motion } from 'motion/react'
 import { layerById } from '../content/layers'
 import { profile } from '../content/profile'
+import { ArchitecturePlate } from '../components/hero/ArchitecturePlate'
+import { Contours } from '../components/hero/Contours'
+import { TitleBlock } from '../components/hero/TitleBlock'
 import { LayerSection } from '../components/strata/LayerSection'
+import { useClock } from '../hooks/useClock'
 import { scrollToLayer } from '../motion/scroll'
 
-/** Stage 1 placeholder hero. Stage 2 adds the survey-plate architecture graph and greeting. */
-export function Atmosphere() {
-  return (
-    <LayerSection layer={layerById.atmosphere} bare className="min-h-svh">
-      <div className="flex min-h-[calc(100svh-8rem)] flex-col justify-end pt-16">
-        <p className="mono-label text-accent">Sheet 01 / 06 · {profile.role} · {profile.location}</p>
-        <h1
-          id="atmosphere-title"
-          className="mt-4 text-[clamp(3rem,11vw,9.5rem)] font-semibold leading-[0.88] tracking-[-0.045em]"
-        >
-          Adewale
-          <br />
-          Gbadamosi
-        </h1>
-        <p className="mt-8 max-w-3xl text-[clamp(1.25rem,2.6vw,2rem)] leading-snug text-muted">
-          {profile.thesis.map((line, i) => (
-            <span key={line} className={i === profile.thesis.length - 1 ? 'text-fg' : undefined}>
-              {line}{' '}
-            </span>
-          ))}
-        </p>
+const rise = {
+  hidden: { y: '105%' },
+  shown: (i: number) => ({ y: '0%', transition: { delay: 0.35 + i * 0.14, duration: 0.8, ease: [0.2, 0.7, 0.1, 1] as const } }),
+}
 
-        <button
-          type="button"
-          onClick={() => scrollToLayer('topsoil')}
-          className="mono-label group mt-14 inline-flex w-fit items-center gap-3 text-muted hover:text-fg"
-        >
-          <svg width="14" height="18" viewBox="0 0 18 22" aria-hidden="true" className="text-accent motion-safe:animate-bounce">
-            <path d="M2 0h14v8l-7 14-7-14z" fill="currentColor" />
-          </svg>
-          Drill down · ±0 m
-        </button>
+/**
+ * Sheet 01: the cloud layer. A survey plate of this site's own AWS
+ * architecture, your greeting in your own time, and Adewale's in Newfoundland.
+ */
+export function Atmosphere() {
+  const clock = useClock(profile.timeZone)
+
+  return (
+    <LayerSection layer={layerById.atmosphere} bare className="min-h-svh overflow-hidden" backdrop={<Contours />}>
+      <div className="grid min-h-[calc(100svh-4rem)] items-center gap-12 pt-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+        <div className="flex flex-col justify-center">
+          <p className="mono-label text-accent">
+            <span className="text-fg">{clock.greeting}.</span> It’s {clock.homeTime} in Newfoundland · {clock.relation}
+          </p>
+
+          <h1
+            id="atmosphere-title"
+            className="mt-5 text-[clamp(3.25rem,10.5vw,8.75rem)] font-semibold leading-[0.86] tracking-[-0.045em] lg:text-[clamp(3.25rem,7.4vw,8.75rem)]"
+          >
+            Adewale
+            <br />
+            Gbadamosi
+          </h1>
+
+          <p className="mt-8 max-w-xl text-[clamp(1.25rem,2.4vw,1.85rem)] leading-[1.2] tracking-[-0.01em]">
+            {profile.thesis.map((line, i) => (
+              <span key={line} className="block overflow-hidden pb-[0.08em]">
+                <motion.span
+                  className={`block ${i === profile.thesis.length - 1 ? 'text-accent' : 'text-muted'}`}
+                  variants={rise}
+                  initial="hidden"
+                  animate="shown"
+                  custom={i}
+                >
+                  {line}
+                </motion.span>
+              </span>
+            ))}
+          </p>
+
+          <p className="mt-6 max-w-lg text-[0.95rem] leading-relaxed text-muted">
+            {profile.role} in {profile.location}. {profile.edge}
+          </p>
+
+          <button
+            type="button"
+            onClick={() => scrollToLayer('topsoil')}
+            className="mono-label group mt-10 inline-flex w-fit items-center gap-3 border border-line py-3 pl-3 pr-4 text-fg transition-colors hover:border-accent"
+          >
+            <svg width="12" height="16" viewBox="0 0 18 22" aria-hidden="true" className="text-accent motion-safe:animate-bounce">
+              <path d="M2 0h14v8l-7 14-7-14z" fill="currentColor" />
+            </svg>
+            Drill into the work
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-4 pb-8 lg:pb-0">
+          <ArchitecturePlate />
+          <TitleBlock />
+        </div>
       </div>
     </LayerSection>
   )

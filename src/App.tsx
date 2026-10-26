@@ -1,3 +1,4 @@
+import { MotionConfig } from 'motion/react'
 import { useEffect } from 'react'
 import { DepthGauge } from './components/depth-gauge/DepthGauge'
 import { Atmosphere } from './layers/Atmosphere'
@@ -15,7 +16,7 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a
         href="#topsoil"
         className="mono-label fixed left-4 top-4 z-[70] -translate-y-20 bg-[#3ee6ff] px-3 py-2 text-[#070d1f] focus:translate-y-0"
@@ -32,6 +33,6 @@ export default function App() {
         <PlaceholderLayer id="bedrock" note="Stage 4 · the foundation" />
         <CoreReadout />
       </main>
-    </>
+    </MotionConfig>
   )
 }
