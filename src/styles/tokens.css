@@ -1,0 +1,144 @@
+/*
+ * Per-layer design tokens.
+ * Every layer section sets data-layer="<id>"; components only ever read the
+ * semantic variables (--bg, --fg, --accent …), so a layer re-skins everything
+ * inside it. Dark is the default; [data-theme="light"] on <html> swaps palettes.
+ */
+
+:root {
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
+
+  --gauge-w: 5.5rem;
+  --bar-h: 3.75rem;
+}
+
+/* ---------- Dark (default) ---------- */
+
+[data-layer='atmosphere'] {
+  --bg: #070d1f;
+  --bg-2: #0c1530;
+  --fg: #e6f0ff;
+  --muted: #93a4c3;
+  --accent: #3ee6ff;
+  --accent-2: #7a8cff;
+  --line: rgb(62 230 255 / 0.22);
+}
+
+[data-layer='topsoil'] {
+  --bg: #16110c;
+  --bg-2: #211910;
+  --fg: #f1ebe2;
+  --muted: #b5a894;
+  --accent: #8fd16a;
+  --accent-2: #d9a35b;
+  --line: rgb(143 209 106 / 0.22);
+}
+
+[data-layer='sediment'] {
+  --bg: #221b11;
+  --bg-2: #2d2416;
+  --fg: #f4e7cf;
+  --muted: #c7b48e;
+  --accent: #e8ab45;
+  --accent-2: #7fb3dd;
+  --line: rgb(127 179 221 / 0.25);
+}
+
+[data-layer='metamorphic'] {
+  --bg: #15171a;
+  --bg-2: #1e2125;
+  --fg: #e7e9ec;
+  --muted: #9ea5af;
+  --accent: #ff7a1a;
+  --accent-2: #b8c2cc;
+  --line: rgb(184 194 204 / 0.2);
+}
+
+[data-layer='bedrock'] {
+  --bg: #0f0e0e;
+  --bg-2: #1a1817;
+  --fg: #ebe6e3;
+  --muted: #a69d98;
+  --accent: #e0613f;
+  --accent-2: #8f8682;
+  --line: rgb(224 97 63 / 0.22);
+}
+
+[data-layer='core'] {
+  --bg: #0a0a0c;
+  --bg-2: #141418;
+  --fg: #f2f2f4;
+  --muted: #a3a3ad;
+  --accent: #3ee6ff;
+  --accent-2: #e8ab45;
+  --line: rgb(255 255 255 / 0.14);
+}
+
+/* ---------- Light ---------- */
+
+[data-theme='light'] [data-layer='atmosphere'],
+[data-theme='light'][data-layer='atmosphere'] {
+  --bg: #eef4fb;
+  --bg-2: #dfe9f6;
+  --fg: #0a1630;
+  --muted: #475673;
+  --accent: #006b82;
+  --accent-2: #3d4fc4;
+  --line: rgb(0 107 130 / 0.25);
+}
+
+[data-theme='light'] [data-layer='topsoil'],
+[data-theme='light'][data-layer='topsoil'] {
+  --bg: #f4efe6;
+  --bg-2: #e9e0d0;
+  --fg: #231a10;
+  --muted: #5e5140;
+  --accent: #2f6b1c;
+  --accent-2: #8a5714;
+  --line: rgb(47 107 28 / 0.25);
+}
+
+[data-theme='light'] [data-layer='sediment'],
+[data-theme='light'][data-layer='sediment'] {
+  --bg: #f6ecd8;
+  --bg-2: #eddcbc;
+  --fg: #2b2010;
+  --muted: #64543a;
+  --accent: #8a5a00;
+  --accent-2: #1f5f8f;
+  --line: rgb(31 95 143 / 0.28);
+}
+
+[data-theme='light'] [data-layer='metamorphic'],
+[data-theme='light'][data-layer='metamorphic'] {
+  --bg: #eceef0;
+  --bg-2: #dfe2e6;
+  --fg: #17191c;
+  --muted: #4e5560;
+  --accent: #b44a00;
+  --accent-2: #4e5965;
+  --line: rgb(78 89 101 / 0.25);
+}
+
+[data-theme='light'] [data-layer='bedrock'],
+[data-theme='light'][data-layer='bedrock'] {
+  --bg: #ece8e5;
+  --bg-2: #ddd7d3;
+  --fg: #1a1716;
+  --muted: #564e4a;
+  --accent: #a3341a;
+  --accent-2: #6b625e;
+  --line: rgb(163 52 26 / 0.25);
+}
+
+[data-theme='light'] [data-layer='core'],
+[data-theme='light'][data-layer='core'] {
+  --bg: #f5f5f6;
+  --bg-2: #e8e8eb;
+  --fg: #111114;
+  --muted: #50505a;
+  --accent: #006b82;
+  --accent-2: #8a5a00;
+  --line: rgb(0 0 0 / 0.14);
+}
