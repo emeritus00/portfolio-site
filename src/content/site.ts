@@ -63,11 +63,11 @@ export const infraFacts = [
   'No cookies, no trackers, no analytics',
 ]
 
-/** Measured, not claimed: mobile Lighthouse on the production build. Update after re-running. */
+/** Measured, not claimed: mobile Lighthouse on the live site. Update after re-running. */
 export const lighthouse = {
-  measured: 'Oct 2026, local production build, mobile',
+  measured: 'Oct 2026, live site, mobile',
   scores: [
-    { label: 'Performance', value: '92–95' },
+    { label: 'Performance', value: '93–100' },
     { label: 'Accessibility', value: '100' },
     { label: 'Best practices', value: '100' },
     { label: 'SEO', value: '100' },

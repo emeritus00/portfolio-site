@@ -81,8 +81,14 @@ Visitor → (Route 53) → CloudFront (HTTPS, security headers) → private S3 b
 You need the AWS CLI logged in to your account, and Terraform 1.10 or newer:
 
 ```bash
-brew install hashicorp/tap/terraform
+brew install awscli hashicorp/tap/terraform
 ```
+
+No Homebrew? Use Docker instead, e.g. `docker run --rm -v ~/.aws:/root/.aws:ro -v "$PWD":/w -w /w hashicorp/terraform:1.13 plan`.
+
+**New GitHub repos use immutable OIDC subjects** (`repo:owner@ID/name@ID:…`). Set `github_ids` in `terraform.tfvars`; the command is in `variables.tf`.
+
+**State:** `terraform.tfstate` lives in `infra/` on your machine by default, and it's git-ignored. Back it up or move it to S3 (see below). Losing it means Terraform no longer knows about the live resources.
 
 ```bash
 cd infra
@@ -123,7 +129,7 @@ Push to `main`. The pipeline (`.github/workflows/ci.yml`) runs these steps:
 2. **Infra check:** `terraform fmt` and `terraform validate`.
 3. **Deploy**, only on `main` and only once `AWS_ROLE_ARN` exists:
    - hashed assets are uploaded with a 1-year immutable cache;
-   - `index.html` and the other root files are uploaded with no cache;
+   - `index.html` and the other root files are always revalidated by browsers, but CloudFront keeps them at the edge for a day (`s-maxage`), so visitors never wait on S3;
    - CloudFront is invalidated.
 
 Pull requests run steps 1–2 only.
@@ -135,7 +141,8 @@ At portfolio traffic, about **$0–0.05/month** without a domain. CloudFront's a
 
 ## Quality bar
 
-- **Lighthouse (mobile, production build):** Performance 92–95, Accessibility 100, Best Practices 100, SEO 100.
+- **Lighthouse (mobile, live site):** Performance 93–100 (100 on a warm edge cache), Accessibility 100, Best Practices 100, SEO 100.
+- **Pre-rendered:** `npm run build` renders the page to static HTML (`src/entry-server.tsx`, `scripts/prerender.mjs`), so it paints with no JavaScript. The app bundle is fetched only after that first paint (`boot.js`), then React hydrates.
 - **Bundle splitting:** first load is about 141 KB of JS (gzip). The terminal, easter egg, assistant and animation library load only when used.
 - **Reduced motion:** `prefers-reduced-motion` gives a calm, static version with no smooth scroll and no moving particles, with everything drawn immediately.
 - **Keyboard:** the whole site works from the keyboard, with visible focus, a skip link and focus returned after every overlay.
