@@ -1,5 +1,7 @@
 import { layers } from '../../content/layers'
+import { throughLines } from '../../content/throughline'
 import { formatDepth, useDepth } from '../../hooks/useDepth'
+import { useActiveSkill } from '../../lib/skillStore'
 import { scrollToLayer } from '../../motion/scroll'
 
 const last = layers.length - 1
@@ -13,6 +15,9 @@ export function DepthGauge() {
   const { active, index, progress, depth } = useDepth()
   const position = Math.min(1, (index + (index === last ? 0 : progress)) / last)
   const current = layers[index]
+  // While a through-line skill is hovered, the layer it came from pulses on the rail.
+  const activeSkill = useActiveSkill()
+  const originLayer = throughLines.find((t) => t.id === activeSkill)?.origin.layer
 
   return (
     <nav
@@ -70,6 +75,9 @@ export function DepthGauge() {
                   aria-label={`${l.name}: ${l.chapter}`}
                   className="group relative flex h-8 w-full cursor-pointer items-center justify-center"
                 >
+                  {originLayer === l.id && (
+                    <span data-layer={l.id} aria-hidden="true" className="absolute h-5 w-5 rotate-45 border border-accent motion-safe:animate-ping" />
+                  )}
                   <span
                     data-layer={l.id}
                     className={`block h-2.5 w-2.5 rotate-45 border border-accent transition-transform duration-300 group-hover:scale-125 ${

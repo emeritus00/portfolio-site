@@ -27,17 +27,22 @@ export function startSmoothScroll() {
   }
 }
 
+/** Smooth-scroll to any element (offset in px), respecting reduced motion. */
+export function scrollToElement(el: HTMLElement, offset = 0, onComplete?: () => void) {
+  if (lenis) {
+    lenis.scrollTo(el, { offset, duration: 1.6, onComplete })
+  } else {
+    const top = el.getBoundingClientRect().top + window.scrollY + offset
+    window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+    onComplete?.()
+  }
+}
+
 /** Scroll to a layer by id, moving keyboard focus with it. */
 export function scrollToLayer(id: string) {
   const el = document.getElementById(id)
   if (!el) return
-  const focusTarget = () => el.focus({ preventScroll: true })
-  if (lenis) {
-    lenis.scrollTo(el, { duration: 1.6, onComplete: focusTarget })
-  } else {
-    el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-    focusTarget()
-  }
+  scrollToElement(el, 0, () => el.focus({ preventScroll: true }))
   history.replaceState(null, '', `#${id}`)
 }
 

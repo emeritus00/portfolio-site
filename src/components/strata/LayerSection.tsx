@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { layers, type Layer } from '../../content/layers'
 import { formatDepth } from '../../hooks/useDepth'
 import { hatchStyle } from '../../lib/hatches'
+import { SkillTags } from '../throughline/SkillTags'
 import { Boundary } from './Boundary'
 
 interface Props {
@@ -82,6 +83,7 @@ export function LayerSection({ layer, children, bare, backdrop, className = '' }
               </dl>
             </header>
           )}
+          <SkillTags layer={layer.id} />
           {children}
         </div>
       </div>

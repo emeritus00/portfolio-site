@@ -1,6 +1,9 @@
-import { MotionConfig } from 'motion/react'
-import { useEffect } from 'react'
+import { AnimatePresence, MotionConfig } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { DepthGauge } from './components/depth-gauge/DepthGauge'
+import { Mantle } from './components/terminal/Mantle'
+import { Terminal } from './components/terminal/Terminal'
+import { ThroughLine } from './components/throughline/ThroughLine'
 import { Atmosphere } from './layers/Atmosphere'
 import { CoreReadout } from './layers/CoreReadout'
 import { Bedrock } from './layers/Bedrock'
@@ -10,6 +13,8 @@ import { Topsoil } from './layers/Topsoil'
 import { ScrollTrigger, startSmoothScroll } from './motion/scroll'
 
 export default function App() {
+  const [mantle, setMantle] = useState(false)
+
   useEffect(() => {
     const stop = startSmoothScroll()
     // Fonts change line heights; re-measure triggers once they land.
@@ -27,7 +32,10 @@ export default function App() {
       </a>
       <div className="grain" aria-hidden="true" />
       <DepthGauge />
-      <main className="max-md:pb-[var(--bar-h)]" data-layer="core">
+      <Terminal onMantle={() => setMantle(true)} />
+      <AnimatePresence>{mantle && <Mantle onClose={() => setMantle(false)} />}</AnimatePresence>
+      <main className="relative max-md:pb-[var(--bar-h)]" data-layer="core">
+        <ThroughLine />
         <Atmosphere />
         <Topsoil />
         <Sediment />
