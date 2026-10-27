@@ -8,7 +8,7 @@ export function TitleBlock() {
     ['Drawn', 'A. Gbadamosi'],
     ['Checked', 'ISTQB CTFL'],
     ['Certified', 'AWS SAA · DVA'],
-    ['Local time', `${clock.homeTime} ${clock.homeZone}`],
+    ['Local time', clock ? `${clock.homeTime} ${clock.homeZone}` : '—'],
     ['Sheet', `01 / 06`],
     ['Scale', 'Career, 1 : 1'],
   ]

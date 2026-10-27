@@ -20,7 +20,15 @@ export function Atmosphere() {
       <div className="grid min-h-[calc(100svh-4rem)] items-center gap-12 pt-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
         <div className="flex flex-col justify-center">
           <p className="mono-label text-accent">
-            <span className="text-fg">{clock.greeting}.</span> It’s {clock.homeTime} in Newfoundland · {clock.relation}
+            {clock ? (
+              <>
+                <span className="text-fg">{clock.greeting}.</span> It’s {clock.homeTime} in Newfoundland · {clock.relation}
+              </>
+            ) : (
+              <>
+                <span className="text-fg">Hello.</span> Checking the time in Newfoundland…
+              </>
+            )}
           </p>
 
           <h1
