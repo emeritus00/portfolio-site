@@ -19,7 +19,8 @@ export function Atmosphere() {
     <LayerSection layer={layerById.atmosphere} bare className="min-h-svh overflow-hidden" backdrop={<Contours />}>
       <div className="grid min-h-[calc(100svh-4rem)] items-center gap-12 pt-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
         <div className="flex flex-col justify-center">
-          <p className="mono-label text-accent">
+          {/* Two lines reserved on phones: the greeting fills in after hydration and must not push the page down. */}
+          <p className="mono-label min-h-[2lh] text-accent md:min-h-[1lh]">
             {clock ? (
               <>
                 <span className="text-fg">{clock.greeting}.</span> It’s {clock.homeTime} in Newfoundland · {clock.relation}
