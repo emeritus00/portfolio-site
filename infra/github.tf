@@ -13,6 +13,13 @@ data "aws_iam_openid_connect_provider" "github" {
 }
 
 locals {
+  # Accept the classic subject and, when IDs are given, GitHub's immutable one (survives renames).
+  repo_owner = split("/", var.github_repository)[0]
+  repo_name  = split("/", var.github_repository)[1]
+  github_subjects = compact([
+    "repo:${var.github_repository}:ref:refs/heads/main",
+    var.github_ids == "" ? "" : "repo:${local.repo_owner}@${split("/", var.github_ids)[0]}/${local.repo_name}@${split("/", var.github_ids)[1]}:ref:refs/heads/main",
+  ])
   github_oidc_arn = var.create_github_oidc_provider ? aws_iam_openid_connect_provider.github[0].arn : data.aws_iam_openid_connect_provider.github[0].arn
 }
 
@@ -35,7 +42,7 @@ data "aws_iam_policy_document" "deploy_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:ref:refs/heads/main"]
+      values   = local.github_subjects
     }
   }
 }

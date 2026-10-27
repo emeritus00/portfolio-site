@@ -22,6 +22,16 @@ variable "github_repository" {
   default     = "emeritus00/portfolio-site"
 }
 
+variable "github_ids" {
+  description = <<-EOT
+    "<owner_id>/<repo_id>" for GitHub's immutable OIDC subjects (repo:owner@id/name@id:…), which
+    new repos use. Find them with: gh api repos/OWNER/REPO --jq '"\(.owner.id)/\(.id)"'
+    Leave empty to trust only the classic repo:owner/name subject.
+  EOT
+  type        = string
+  default     = ""
+}
+
 variable "create_github_oidc_provider" {
   description = "Create the GitHub Actions OIDC provider. Set false if your AWS account already has one."
   type        = bool
