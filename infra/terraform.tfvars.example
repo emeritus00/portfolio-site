@@ -1,0 +1,10 @@
+# cp terraform.tfvars.example terraform.tfvars, then edit. terraform.tfvars is git-ignored.
+
+budget_email      = "adewalegbadamosi@gmail.com"
+github_repository = "emeritus00/portfolio" # the GitHub repo this site is pushed to
+
+# Optional: a domain with a Route 53 hosted zone in this account. Leave empty for *.cloudfront.net.
+domain_name = ""
+
+# Set false if this AWS account already has the GitHub OIDC provider (from another project).
+create_github_oidc_provider = true

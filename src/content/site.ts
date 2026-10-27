@@ -44,3 +44,32 @@ export const siteEdges: SiteEdge[] = [
   { id: 'e-iac-s3', from: 'iac', to: 's3', d: 'M440 366 V214', label: 'provisions', control: true },
   { id: 'e-iac-acm', from: 'iac', to: 'acm', d: 'M440 366 H236', label: '', control: true },
 ]
+
+/** The delivery pipeline, shown in the footer's "How this site is built" panel. */
+export const pipeline = [
+  { step: 'Push to main', detail: 'GitHub' },
+  { step: 'Verify', detail: 'Lint · type-check · unit tests · build' },
+  { step: 'Validate infra', detail: 'terraform fmt + validate' },
+  { step: 'Authenticate', detail: 'OIDC → short-lived IAM role, no stored keys' },
+  { step: 'Ship', detail: 'S3 sync (hashed assets cached 1 year) + CloudFront invalidation' },
+]
+
+export const infraFacts = [
+  'Private S3 bucket, readable only by CloudFront (Origin Access Control)',
+  'HTTPS everywhere, HTTP/3, strict security headers and a CSP with no inline scripts',
+  'Every resource declared in Terraform (/infra)',
+  'Least-privilege deploy role: one bucket, one distribution',
+  'A $5/month budget alarm as a cost tripwire',
+  'No cookies, no trackers, no analytics',
+]
+
+/** Measured, not claimed: mobile Lighthouse on the production build. Update after re-running. */
+export const lighthouse = {
+  measured: 'Oct 2026, local production build, mobile',
+  scores: [
+    { label: 'Performance', value: '92–95' },
+    { label: 'Accessibility', value: '100' },
+    { label: 'Best practices', value: '100' },
+    { label: 'SEO', value: '100' },
+  ],
+}

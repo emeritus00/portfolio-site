@@ -1,0 +1,6 @@
+# Remote state in S3 with native locking (Terraform >= 1.10).
+bucket       = "YOUR-TERRAFORM-STATE-BUCKET"
+key          = "strata-portfolio/terraform.tfstate"
+region       = "ca-central-1"
+encrypt      = true
+use_lockfile = true

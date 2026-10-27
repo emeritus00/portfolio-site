@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { DepthGauge } from './components/depth-gauge/DepthGauge'
+import { SiteFooter } from './components/SiteFooter'
 import { Toolbar } from './components/Toolbar'
 import { loadAssistant } from './components/assistant/load'
 import { loadTerminal, useTerminal } from './components/terminal/useTerminal'
@@ -61,7 +62,7 @@ export default function App() {
         {mantle && <Mantle onClose={() => setMantle(false)} />}
         {assistant.open && <AssistantPanel initial={firstQuestion} onClose={assistant.hide} />}
       </Suspense>
-      <main className="relative max-md:pb-[var(--bar-h)]" data-layer="core">
+      <main className="relative" data-layer="core">
         <ThroughLine />
         <Atmosphere />
         <Topsoil />
@@ -70,6 +71,7 @@ export default function App() {
         <Bedrock />
         <CoreReadout />
       </main>
+      <SiteFooter />
     </>
   )
 }
