@@ -61,9 +61,8 @@ jobs:
     # Only from main, and only once the AWS variables exist (see README → Deploy).
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.AWS_ROLE_ARN != ''
     runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: ${{ vars.SITE_URL }}
+    # No `environment:` here on purpose: it would change the OIDC subject to
+    # repo:…:environment:… and the IAM trust policy only accepts refs/heads/main.
     permissions:
       id-token: write # OIDC: short-lived AWS credentials, no stored keys
       contents: read
