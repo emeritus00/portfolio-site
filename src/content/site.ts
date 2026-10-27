@@ -51,7 +51,7 @@ export const pipeline = [
   { step: 'Verify', detail: 'Lint · type-check · unit tests · build' },
   { step: 'Validate infra', detail: 'terraform fmt + validate' },
   { step: 'Authenticate', detail: 'OIDC → short-lived IAM role, no stored keys' },
-  { step: 'Ship', detail: 'S3 sync (hashed assets cached 1 year) + CloudFront invalidation' },
+  { step: 'Ship', detail: 'S3 sync (assets cached 1 year, pages cached at the edge) + CloudFront invalidation' },
 ]
 
 export const infraFacts = [

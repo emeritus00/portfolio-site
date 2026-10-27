@@ -84,10 +84,15 @@ jobs:
           aws s3 sync dist/assets "s3://${{ vars.S3_BUCKET }}/assets" \
             --cache-control "public,max-age=31536000,immutable"
 
-      - name: Upload everything else (always revalidated)
+      # Browsers always revalidate these (max-age=0), but CloudFront keeps them at the edge for a
+      # day (s-maxage) so visitors never wait on S3. The invalidation below makes deploys instant.
+      # `cp` (not sync) so headers are re-applied even when a file's bytes didn't change;
+      # the sync afterwards only removes files that no longer exist.
+      - name: Upload everything else (edge-cached, browser-revalidated)
         run: |
-          aws s3 sync dist "s3://${{ vars.S3_BUCKET }}" \
-            --exclude "assets/*" --cache-control "public,max-age=0,must-revalidate" --delete
+          aws s3 cp dist "s3://${{ vars.S3_BUCKET }}" --recursive \
+            --exclude "assets/*" --cache-control "public,max-age=0,s-maxage=86400,must-revalidate"
+          aws s3 sync dist "s3://${{ vars.S3_BUCKET }}" --exclude "assets/*" --size-only --delete
 
       - name: Invalidate CloudFront
         run: |
