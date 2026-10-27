@@ -2,6 +2,10 @@ import type { ReactNode } from 'react'
 import { layers } from '../../content/layers'
 import { profile } from '../../content/profile'
 import { projects, statusLabel } from '../../content/projects'
+import { askAssistant } from '../../lib/assistant/bus'
+import { answer } from '../../lib/assistant/retrieve'
+import { getTheme, setTheme } from '../../lib/theme'
+import { Fact } from '../ui/Fact'
 import { scrollToElement, scrollToLayer } from '../../motion/scroll'
 
 export interface CommandResult {
@@ -161,6 +165,29 @@ export const commands: Record<string, Command> = {
             },
           },
   },
+  ask: {
+    summary: 'ask <question>',
+    run: (args) => {
+      if (!args.length) return { out: [dim('Opening the assistant…')], after: () => (setTimeout(() => askAssistant(), 400), true) }
+      const { doc } = answer(args.join(' '))
+      if (!doc) return { out: ['Not on the site. Try: ask what does he build?', dim(`Or email ${profile.email}`)] }
+      return {
+        out: [
+          <span key="t" className="text-accent">{doc.title}</span>,
+          <Fact key="a">{doc.answer}</Fact>,
+          ...(doc.source ? [dim(`source: ${doc.source.label}`)] : []),
+        ],
+      }
+    },
+  },
+  theme: {
+    summary: 'theme [light|dark]',
+    run: (args) => {
+      const next = args[0] === 'light' || args[0] === 'dark' ? args[0] : getTheme() === 'dark' ? 'light' : 'dark'
+      setTheme(next)
+      return { out: [dim(`Theme set to ${next}.`)] }
+    },
+  },
   clear: { summary: 'clear the screen', run: () => ({ out: [] }) },
   exit: { summary: 'close terminal', run: () => ({ out: [], after: () => true }) },
   sudo: {
@@ -192,6 +219,7 @@ export function complete(input: string): string {
     open: projects.map((p) => p.slug),
     ls: ['projects', 'layers'],
     cat: ['stack'],
+    theme: ['light', 'dark'],
   }
   const opts = options[parts[0]] ?? []
   const m = opts.filter((o) => o.startsWith(parts[1] ?? ''))

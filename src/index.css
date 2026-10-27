@@ -51,8 +51,10 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      transition-delay: 0s !important;
       scroll-behavior: auto !important;
     }
   }
@@ -143,4 +145,75 @@ html.lenis body {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: plate-draw 0.7s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+/* Hero thesis lines rise out of their masks. */
+.rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+/* Inspection stamp: slams down with a little overshoot. */
+.stamp-in {
+  animation: stamp 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) 0.45s both;
+}
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.9) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-9deg);
+  }
+}
+
+/* Tolerance gauge needle: swing, overshoot, settle in the band. */
+.needle {
+  transform-origin: 120px 130px;
+  transform: rotate(-84deg);
+}
+.needle-settle {
+  animation: needle 2.2s ease-out forwards;
+}
+@keyframes needle {
+  45% {
+    transform: rotate(22deg);
+  }
+  70% {
+    transform: rotate(-9deg);
+  }
+  85% {
+    transform: rotate(4deg);
+  }
+  to {
+    transform: rotate(-1deg);
+  }
+}
+
+/* Checklist ticks draw themselves in sequence. */
+.tick {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.3s ease-out;
+}
+.tick-on {
+  stroke-dashoffset: 0;
+}
+
+/* Core tray: pieces are laid into the box when it scrolls into view. */
+.core-piece {
+  opacity: 0;
+  translate: -24px 0;
+  transition-property: opacity, translate, filter;
+  transition-duration: 0.6s, 0.6s, 0.3s;
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.is-laid .core-piece {
+  opacity: 1;
+  translate: 0 0;
 }

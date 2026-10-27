@@ -1,4 +1,3 @@
-import { motion } from 'motion/react'
 import { layerById } from '../content/layers'
 import { profile } from '../content/profile'
 import { ArchitecturePlate } from '../components/hero/ArchitecturePlate'
@@ -6,12 +5,8 @@ import { Contours } from '../components/hero/Contours'
 import { TitleBlock } from '../components/hero/TitleBlock'
 import { LayerSection } from '../components/strata/LayerSection'
 import { useClock } from '../hooks/useClock'
+import { askAssistant } from '../lib/assistant/bus'
 import { scrollToLayer } from '../motion/scroll'
-
-const rise = {
-  hidden: { y: '105%' },
-  shown: (i: number) => ({ y: '0%', transition: { delay: 0.35 + i * 0.14, duration: 0.8, ease: [0.2, 0.7, 0.1, 1] as const } }),
-}
 
 /**
  * Sheet 01: the cloud layer. A survey plate of this site's own AWS
@@ -40,15 +35,12 @@ export function Atmosphere() {
           <p className="mt-8 max-w-xl text-[clamp(1.25rem,2.4vw,1.85rem)] leading-[1.2] tracking-[-0.01em]">
             {profile.thesis.map((line, i) => (
               <span key={line} className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  className={`block ${i === profile.thesis.length - 1 ? 'text-accent' : 'text-muted'}`}
-                  variants={rise}
-                  initial="hidden"
-                  animate="shown"
-                  custom={i}
+                <span
+                  className={`rise block ${i === profile.thesis.length - 1 ? 'text-accent' : 'text-muted'}`}
+                  style={{ animationDelay: `${0.35 + i * 0.14}s` }}
                 >
                   {line}
-                </motion.span>
+                </span>
               </span>
             ))}
           </p>
@@ -57,16 +49,26 @@ export function Atmosphere() {
             {profile.role} in {profile.location}. {profile.edge}
           </p>
 
-          <button
-            type="button"
-            onClick={() => scrollToLayer('topsoil')}
-            className="mono-label group mt-10 inline-flex w-fit items-center gap-3 border border-line py-3 pl-3 pr-4 text-fg transition-colors hover:border-accent"
-          >
-            <svg width="12" height="16" viewBox="0 0 18 22" aria-hidden="true" className="text-accent motion-safe:animate-bounce">
-              <path d="M2 0h14v8l-7 14-7-14z" fill="currentColor" />
-            </svg>
-            Drill into the work
-          </button>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => scrollToLayer('topsoil')}
+              className="mono-label group inline-flex w-fit items-center gap-3 border border-line py-3 pl-3 pr-4 text-fg transition-colors hover:border-accent"
+            >
+              <svg width="12" height="16" viewBox="0 0 18 22" aria-hidden="true" className="text-accent motion-safe:animate-bounce">
+                <path d="M2 0h14v8l-7 14-7-14z" fill="currentColor" />
+              </svg>
+              Drill into the work
+            </button>
+            <button
+              type="button"
+              onClick={() => askAssistant()}
+              className="mono-label inline-flex w-fit items-center gap-2 border border-line py-3 pl-3 pr-4 text-muted transition-colors hover:border-accent hover:text-fg"
+            >
+              <span aria-hidden="true" className="text-accent">✦</span>
+              Ask about my work
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 pb-8 lg:pb-0">

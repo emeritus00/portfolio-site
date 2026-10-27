@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { layers } from '../../content/layers'
 import { useActiveSkill } from '../../lib/skillStore'
+import { useTheme } from '../../lib/theme'
 
 const X = 22
 
@@ -28,10 +29,12 @@ export function ThroughLine() {
   const [geo, setGeo] = useState<Geometry>({ height: 0, anchors: [], stops: [] })
   const fill = useRef<SVGGElement>(null)
   const active = useActiveSkill()
+  const theme = useTheme()
 
   useLayoutEffect(() => {
     const main = root.current?.parentElement
-    if (!main) return
+    // The thread is desktop-only; skip all layout reads on phones.
+    if (!main || !window.matchMedia('(min-width: 768px)').matches) return
     const measure = () => {
       const box = main.getBoundingClientRect()
       const anchors = Array.from(main.querySelectorAll<HTMLElement>('[data-skill]')).map((el) => {
@@ -59,7 +62,8 @@ export function ThroughLine() {
     ro.observe(main)
     document.fonts?.ready.then(measure)
     return () => ro.disconnect()
-  }, [])
+    // Gradient stops are read from computed tokens, so re-measure on theme change.
+  }, [theme])
 
   // Fill the thread down to the drill line without re-rendering React.
   useEffect(() => {

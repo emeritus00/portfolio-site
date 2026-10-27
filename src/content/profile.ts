@@ -32,6 +32,16 @@ export const profile = {
     frontend: ['React'],
     data: ['PostgreSQL', 'MongoDB'],
     cloud: ['AWS', 'Docker', 'Terraform'],
+    ai: ['LLM API integration', 'AI-assisted development'],
+  },
+  /** How AI shows up in your work. Shown in Topsoil and used by the site assistant. */
+  ai: {
+    principle:
+      'Generate fast, inspect like QA: AI output gets the same review, tests and acceptance criteria as any other code.',
+    practices: [
+      { name: 'LLM API integration', detail: '[TODO] Which models / APIs you have built with, and in which apps.' },
+      { name: 'AI-assisted development', detail: '[TODO] The tools you use day to day (e.g. Claude Code, Copilot) and how.' },
+    ],
   },
 } as const
 

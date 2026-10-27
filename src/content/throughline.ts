@@ -20,6 +20,12 @@ export const throughLines: ThroughLine[] = [
     resurfaces: [{ layer: 'topsoil', as: 'Software testing (ISTQB)' }],
   },
   {
+    id: 'verification',
+    skill: 'Verification',
+    origin: { layer: 'metamorphic', as: 'Release only what passes inspection' },
+    resurfaces: [{ layer: 'topsoil', as: 'Reviewing AI-generated code' }],
+  },
+  {
     id: 'measurement',
     skill: 'Measurement',
     origin: { layer: 'sediment', as: 'Field sampling' },

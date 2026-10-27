@@ -55,8 +55,8 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'clarity',
-    name: 'Clarity',
+    slug: 'kilariti',
+    name: 'Kilariti.',
     tagline: 'Multi-tenant invoicing platform',
     status: 'ready',
     problem:

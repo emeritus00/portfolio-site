@@ -5,6 +5,7 @@ import { ArchDiagram } from '../components/diagram/ArchDiagram'
 import { ProjectCard } from '../components/project/ProjectCard'
 import { LayerSection } from '../components/strata/LayerSection'
 import { Fact } from '../components/ui/Fact'
+import { askAssistant } from '../lib/assistant/bus'
 
 const stackGroups: [string, readonly string[]][] = [
   ['Languages', profile.stack.languages],
@@ -12,6 +13,7 @@ const stackGroups: [string, readonly string[]][] = [
   ['Frontend', profile.stack.frontend],
   ['Data', profile.stack.data],
   ['Cloud & infra', profile.stack.cloud],
+  ['AI', profile.stack.ai],
 ]
 
 /** Sheet 02: the living layer. Stack, credentials, then every project as an inspectable core sample. */
@@ -51,6 +53,29 @@ export function Topsoil() {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="bg-bg p-5 sm:p-6 md:col-span-2">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <h3 className="mono-label text-accent">$ cat ai.md</h3>
+            <button
+              type="button"
+              onClick={() => askAssistant('How does Adewale use AI?')}
+              className="mono-label border border-accent px-3 py-1.5 text-accent transition-colors hover:bg-accent hover:text-bg"
+            >
+              ✦ Ask the core assistant
+            </button>
+          </div>
+          <p className="mt-4 max-w-3xl text-lg leading-snug">{profile.ai.principle}</p>
+          <dl className="mt-5 grid gap-4 sm:grid-cols-2">
+            {profile.ai.practices.map((p) => (
+              <div key={p.name} className="border-l-2 border-accent pl-4">
+                <dt className="font-medium">{p.name}</dt>
+                <dd className="mt-1 text-sm text-muted">
+                  <Fact>{p.detail}</Fact>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
 

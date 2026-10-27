@@ -1,4 +1,3 @@
-import { motion } from 'motion/react'
 import { useRef } from 'react'
 import { metamorphic } from '../content/chapters'
 import { layerById } from '../content/layers'
@@ -34,14 +33,9 @@ function ToleranceGauge({ live }: { live: boolean }) {
         <text x="120" y="28" textAnchor="middle" className="fill-accent font-mono text-[9px] tracking-[0.14em]">
           NOMINAL
         </text>
-        <motion.g
-          style={{ originX: '120px', originY: '130px' }}
-          initial={{ rotate: -84 }}
-          animate={live ? { rotate: [-84, 22, -9, 4, -1] } : { rotate: -84 }}
-          transition={{ duration: 2.2, times: [0, 0.45, 0.7, 0.85, 1], ease: 'easeOut' }}
-        >
+        <g className={`needle ${live ? 'needle-settle' : ''}`}>
           <line x1="120" y1="130" x2="120" y2="52" stroke="var(--accent)" strokeWidth="2" />
-        </motion.g>
+        </g>
         <circle cx="120" cy="130" r="6" fill="var(--bg)" stroke="var(--accent)" strokeWidth="2" />
       </svg>
       <figcaption className="mt-2 flex items-center justify-between">
@@ -98,15 +92,15 @@ export function Metamorphic() {
                   className="mt-0.5 grid h-6 w-6 place-items-center border-2 border-accent-2"
                 >
                   <svg viewBox="0 0 16 16" className="h-4 w-4">
-                    <motion.path
+                    <path
                       d="M3 8.5l3.2 3L13 4.5"
+                      pathLength={1}
                       fill="none"
                       stroke="var(--accent)"
                       strokeWidth="2.4"
                       strokeLinecap="square"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: live ? 1 : 0 }}
-                      transition={{ delay: live ? 0.6 + i * 0.4 : 0, duration: 0.3 }}
+                      className={`tick ${live ? 'tick-on' : ''}`}
+                      style={{ transitionDelay: live ? `${0.6 + i * 0.4}s` : '0s' }}
                     />
                   </svg>
                 </span>

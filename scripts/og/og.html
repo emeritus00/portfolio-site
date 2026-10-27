@@ -1,0 +1,81 @@
+<!doctype html>
+<!--
+  Source for public/og-image.png (1200 × 630, used by LinkedIn / Open Graph).
+  Regenerate with: npm run og
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      @font-face {
+        font-family: 'Space Grotesk';
+        src: url('../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2');
+        font-weight: 300 700;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        src: url('../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        position: relative;
+        background: #070d1f;
+        color: #e6f0ff;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .grid {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(rgb(62 230 255 / 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(62 230 255 / 0.07) 1px, transparent 1px);
+        background-size: 48px 48px;
+      }
+      svg.contours { position: absolute; inset: 0; }
+      .mono { font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; }
+      .content { position: absolute; left: 72px; top: 64px; width: 780px; }
+      .kicker { color: #3ee6ff; }
+      h1 { margin-top: 26px; font-size: 118px; line-height: 0.88; letter-spacing: -0.045em; font-weight: 600; }
+      .thesis { margin-top: 34px; font-size: 34px; line-height: 1.25; color: #93a4c3; }
+      .thesis b { color: #3ee6ff; font-weight: 500; }
+      .foot { position: absolute; left: 72px; bottom: 56px; color: #93a4c3; display: flex; gap: 28px; }
+      .foot span:first-child { color: #e6f0ff; }
+      .core { position: absolute; right: 120px; top: 70px; width: 150px; height: 490px; display: flex; flex-direction: column; }
+      .band { position: relative; border-left: 1px solid rgb(255 255 255 / 0.18); border-right: 1px solid rgb(255 255 255 / 0.18); }
+      .band::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgb(0 0 0 / 0.55), transparent 35%, rgb(255 255 255 / 0.1) 55%, rgb(0 0 0 / 0.6)); }
+      .cap { height: 30px; border-radius: 50%; background: #1b3b55; border: 1px solid rgb(62 230 255 / 0.6); margin-bottom: -15px; position: relative; z-index: 2; }
+      .label { position: absolute; right: 100%; margin-right: 18px; top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 13px; color: #93a4c3; text-align: right; }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <svg class="contours" width="1200" height="630" viewBox="0 0 1200 630">
+      <g fill="none" stroke="#3ee6ff" stroke-opacity="0.16">
+        <path d="M0 470 C 200 430, 420 520, 640 470 S 980 420, 1200 470" />
+        <path d="M0 505 C 220 470, 430 555, 650 505 S 990 455, 1200 505" />
+        <path d="M0 540 C 240 505, 440 590, 660 540 S 1000 490, 1200 540" stroke-opacity="0.32" />
+        <path d="M0 575 C 260 540, 450 625, 670 575 S 1010 525, 1200 575" />
+      </g>
+    </svg>
+
+    <div class="content">
+      <p class="mono kicker">Strata · Software Developer · Canada</p>
+      <h1>Adewale<br />Gbadamosi</h1>
+      <p class="thesis">Engineer by training. Scientist by method.<br /><b>Developer by craft.</b></p>
+    </div>
+
+    <div class="foot mono">
+      <span>AWS SAA · AWS DVA · ISTQB CTFL</span>
+      <span>github.com/emeritus00</span>
+    </div>
+
+    <div class="core">
+      <div class="cap"></div>
+      <div class="band" style="flex: 0.07; background: #13324a"><span class="label mono">Cloud</span></div>
+      <div class="band" style="flex: 0.12; background: #3c5a2a"><span class="label mono">Software</span></div>
+      <div class="band" style="flex: 0.26; background: #7a5a24"><span class="label mono">Env. science</span></div>
+      <div class="band" style="flex: 0.25; background: #6b3a1c"><span class="label mono">Automotive QC</span></div>
+      <div class="band" style="flex: 0.3; background: #5a2a20; border-radius: 0 0 50% 50% / 0 0 24px 24px"><span class="label mono">Engineering</span></div>
+    </div>
+  </body>
+</html>
