@@ -19,7 +19,7 @@ variable "domain_name" {
 variable "github_repository" {
   description = "GitHub repo allowed to deploy, as owner/name."
   type        = string
-  default     = "emeritus00/portfolio"
+  default     = "emeritus00/portfolio-site"
 }
 
 variable "create_github_oidc_provider" {

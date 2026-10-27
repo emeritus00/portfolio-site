@@ -1,7 +1,7 @@
 # cp terraform.tfvars.example terraform.tfvars, then edit. terraform.tfvars is git-ignored.
 
 budget_email      = "adewalegbadamosi@gmail.com"
-github_repository = "emeritus00/portfolio" # the GitHub repo this site is pushed to
+github_repository = "emeritus00/portfolio-site" # the GitHub repo this site is pushed to
 
 # Optional: a domain with a Route 53 hosted zone in this account. Leave empty for *.cloudfront.net.
 domain_name = ""
