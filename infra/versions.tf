@@ -8,12 +8,9 @@ terraform {
     }
   }
 
-  # State is local by default so a first `terraform apply` needs nothing else.
-  # To keep state in S3 (recommended once it's live), create a bucket, then:
-  #   cp backend.hcl.example backend.hcl   # fill in the bucket name
-  #   uncomment the block below and run: terraform init -backend-config=backend.hcl -migrate-state
-  #
-  # backend "s3" {}
+  # State lives in S3 (versioned, encrypted, locked). Settings are in backend.hcl:
+  #   terraform init -backend-config=backend.hcl
+  backend "s3" {}
 }
 
 provider "aws" {

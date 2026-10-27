@@ -88,12 +88,12 @@ No Homebrew? Use Docker instead, e.g. `docker run --rm -v ~/.aws:/root/.aws:ro -
 
 **New GitHub repos use immutable OIDC subjects** (`repo:owner@ID/name@ID:…`). Set `github_ids` in `terraform.tfvars`; the command is in `variables.tf`.
 
-**State:** `terraform.tfstate` lives in `infra/` on your machine by default, and it's git-ignored. Back it up or move it to S3 (see below). Losing it means Terraform no longer knows about the live resources.
+**State** lives in S3, not on your machine: the bucket `strata-portfolio-tfstate-286153084936` (ca-central-1) is versioned, encrypted, private and HTTPS-only. It keeps old state versions for 90 days, and `use_lockfile` stops two `apply` runs from colliding. The settings are in `infra/backend.hcl`.
 
 ```bash
 cd infra
 cp terraform.tfvars.example terraform.tfvars   # set budget_email, github_repository, optional domain_name
-terraform init
+terraform init -backend-config=backend.hcl
 terraform apply
 ```
 
@@ -106,7 +106,16 @@ This creates:
 
 **Custom domain:** register it in Route 53 first, or create a hosted zone for it there, then set `domain_name`. Leave it empty to use the `*.cloudfront.net` URL.
 
-**Remote state (optional):** see the comment in `infra/versions.tf` and `infra/backend.hcl.example`.
+**State bucket (one time, before the first `init`).** It's created with the AWS CLI rather than Terraform, because Terraform needs it to exist first:
+
+```bash
+B=strata-portfolio-tfstate-<your-account-id>
+aws s3api create-bucket --bucket $B --region ca-central-1 --create-bucket-configuration LocationConstraint=ca-central-1
+aws s3api put-bucket-versioning --bucket $B --versioning-configuration Status=Enabled
+aws s3api put-public-access-block --bucket $B --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+```
+
+Then set `bucket` in `infra/backend.hcl`.
 
 ### 2. Connect GitHub
 
