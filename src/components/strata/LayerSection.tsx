@@ -63,16 +63,22 @@ export function LayerSection({ layer, children, bare, backdrop, className = '' }
               <dl className="mono-label grid grid-cols-2 gap-x-6 gap-y-2 border border-line p-4 text-muted md:min-w-64">
                 <dt>Depth</dt>
                 <dd className="text-right text-fg">
-                  {formatDepth(layer.depthStart)} → {formatDepth(layer.depthEnd)}
+                  {layer.depthStart === layer.depthEnd
+                    ? formatDepth(layer.depthStart)
+                    : `${formatDepth(layer.depthStart)} → ${formatDepth(layer.depthEnd)}`}
                 </dd>
                 <dt>Era</dt>
                 <dd className="text-right text-fg">{layer.era}</dd>
-                <dt>Legend</dt>
-                <dd className="flex justify-end">
-                  <span className="block h-4 w-12 border border-line">
-                    <span className="block h-full w-full" style={hatchStyle(layer.hatch, 'var(--accent-2)')} />
-                  </span>
-                </dd>
+                {layer.hatch !== 'none' && (
+                  <>
+                  <dt>Legend</dt>
+                  <dd className="flex justify-end">
+                    <span className="block h-4 w-12 border border-line">
+                      <span className="block h-full w-full" style={hatchStyle(layer.hatch, 'var(--accent-2)')} />
+                    </span>
+                  </dd>
+                  </>
+                )}
               </dl>
             </header>
           )}

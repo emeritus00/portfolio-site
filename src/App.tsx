@@ -3,7 +3,9 @@ import { useEffect } from 'react'
 import { DepthGauge } from './components/depth-gauge/DepthGauge'
 import { Atmosphere } from './layers/Atmosphere'
 import { CoreReadout } from './layers/CoreReadout'
-import { PlaceholderLayer } from './layers/Placeholder'
+import { Bedrock } from './layers/Bedrock'
+import { Metamorphic } from './layers/Metamorphic'
+import { Sediment } from './layers/Sediment'
 import { Topsoil } from './layers/Topsoil'
 import { ScrollTrigger, startSmoothScroll } from './motion/scroll'
 
@@ -28,9 +30,9 @@ export default function App() {
       <main className="max-md:pb-[var(--bar-h)]" data-layer="core">
         <Atmosphere />
         <Topsoil />
-        <PlaceholderLayer id="sediment" note="Stage 4 · contour maps, sample readings, animated charts" />
-        <PlaceholderLayer id="metamorphic" note="Stage 4 · tolerance gauges, self-ticking inspection checklists" />
-        <PlaceholderLayer id="bedrock" note="Stage 4 · the foundation" />
+        <Sediment />
+        <Metamorphic />
+        <Bedrock />
         <CoreReadout />
       </main>
     </MotionConfig>

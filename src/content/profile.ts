@@ -14,8 +14,8 @@ export const profile = {
     github: 'https://github.com/emeritus00',
     linkedin: 'https://www.linkedin.com/in/adewale-gbadamosi-0a228580',
   },
-  /** Place your CV at public/cv.pdf. */
-  cvPath: '/cv.pdf',
+  /** Put your CV at public/cv.pdf, then change this to '/cv.pdf'. */
+  cvPath: '[TODO] add public/cv.pdf',
   certifications: [
     { name: 'AWS Certified Solutions Architect – Associate', issuer: 'Amazon Web Services', year: '[TODO]' },
     { name: 'AWS Certified Developer – Associate', issuer: 'Amazon Web Services', year: '[TODO]' },
